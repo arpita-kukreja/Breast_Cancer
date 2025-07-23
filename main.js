@@ -12,7 +12,7 @@ async function initModel() {
         maxPredictions = model.getTotalClasses();
         labelContainer = document.getElementById("label-container");
         console.log("Model loaded successfully");
-        
+
         // Enable the analyze button after model loads
         document.querySelector('.analyze-btn').disabled = false;
     } catch (error) {
@@ -26,12 +26,12 @@ async function initWebcam() {
     if (!model) {
         await initModel();
     }
-    
+
     try {
         if (webcam) {
             webcam.stop();
         }
-        
+
         const webcamContainer = document.getElementById("webcam-container");
         webcamContainer.innerHTML = '';
         document.getElementById('webcam-section').classList.remove('hidden');
@@ -61,7 +61,7 @@ async function loop() {
 }
 
 // Show/Hide analysis section
-document.getElementById('showAnalysisBtn').addEventListener('click', async function() {
+document.getElementById('showAnalysisBtn').addEventListener('click', async function () {
     document.getElementById('analysisTools').classList.remove('hidden');
     if (!model) {
         try {
@@ -84,7 +84,7 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
         if (!model) {
             await initModel();
         }
-        
+
         const reader = new FileReader();
         reader.onload = (event) => {
             const previewImage = document.getElementById('previewImage');
@@ -115,11 +115,11 @@ uploadArea.addEventListener('drop', async (e) => {
     e.preventDefault();
     uploadArea.style.borderColor = '#ccc';
     uploadArea.style.backgroundColor = 'transparent';
-    
+
     if (!model) {
         await initModel();
     }
-    
+
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
         document.getElementById('fileInput').files = e.dataTransfer.files;
@@ -186,16 +186,16 @@ async function predict(imageElement) {
 // Display results with recommendations
 function displayResults(predictions) {
     if (!labelContainer) return;
-    
+
     labelContainer.innerHTML = '';
     const recommendationsDiv = document.getElementById('recommendations');
-    
+
     predictions.sort((a, b) => b.probability - a.probability);
-    
+
     predictions.forEach(p => {
         const resultDiv = document.createElement('div');
         resultDiv.className = 'result-card';
-        
+
         const percentage = (p.probability * 100).toFixed(2);
         resultDiv.innerHTML = `
             <h3>${p.className}</h3>
@@ -204,14 +204,15 @@ function displayResults(predictions) {
             </div>
             <p>Matching Percentage: ${percentage}%</p>
         `;
-        
+
         labelContainer.appendChild(resultDiv);
     });
 
     // Add recommendations based on highest probability prediction
     const topPrediction = predictions[0];
     if (topPrediction.probability > 0.5) {
-    recommendationsDiv.innerHTML = `
+        recommendationsDiv.innerHTML = `
+        
         <div class="recommendation">
             <h3 style="padding-bottom: 30px; font-size: 40px;">Personalized Recommendations</h3>
             <div class="recommendation-grid">
@@ -219,34 +220,35 @@ function displayResults(predictions) {
                     <h4 style="padding-top: 25px; padding-bottom: 21px;">🏥 Medical Consultation</h4>
                     <ul>
                         <li>Schedule an appointment with an oncologist or breast specialist</li>
-                        <li>Bring your mammogram results and analysis</li>
-                        <li>Request additional imaging (ultrasound, MRI) if needed</li>
-                        <li>Discuss family history and genetic testing options</li>
+                        <li>Bring your ultrasound report and analysis</li>
+                        <li>Discuss the need for additional imaging (MRI, biopsy, or mammogram if applicable)</li>
+                        <li>Review family history and consider genetic counseling</li>
                     </ul>
                 </div>
                 <div class="recommendation-card">
                     <h4 style="padding-top: 25px; padding-bottom: 21px;">📋 Next Steps</h4>
                     <ul>
-                        <li>Consider biopsy if recommended by specialist</li>
-                        <li>Schedule regular follow-up mammograms</li>
-                        <li>Join a breast cancer support group</li>
-                        <li>Explore treatment options and second opinions</li>
+                        <li>Consider biopsy if recommended by the specialist</li>
+                        <li>Schedule follow-up ultrasounds as advised</li>
+                        <li>Join a breast health or support group</li>
+                        <li>Explore treatment options and get second opinions</li>
                     </ul>
                 </div>
                 <div class="recommendation-card">
                     <h4 style="padding-top: 25px; padding-bottom: 21px;">💪 Lifestyle Changes</h4>
                     <ul>
                         <li>Maintain a healthy diet rich in fruits and vegetables</li>
-                        <li>Regular physical activity (150+ minutes per week)</li>
-                        <li>Limit alcohol consumption</li>
+                        <li>Engage in regular physical activity (150+ minutes per week)</li>
+                        <li>Limit alcohol intake</li>
                         <li>Practice stress management and self-care</li>
-                        <li>Continue monthly breast self-examinations</li>
+                        <li>Continue regular breast self-examinations</li>
                     </ul>
                 </div>
             </div>
         </div>
+    
     `;
-}
+    }
 }
 
 // Stop webcam when switching to file upload
