@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Awareness & Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .instructions-list {
+            font-family: 'Poppins', sans-serif;
+            padding-left: 20px;
+            counter-reset: instruction-counter;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .instructions-list li::marker {
+            font-weight: 600;
+            color: #e91e63; /* Pink color for breast cancer theme */
+        }
+
+        /* Basic styling for the page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #e91e63, #f48fb1);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #e91e63, #f48fb1);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #e91e63;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .info-section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #e91e63;
+        }
+
+        .section-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            color: #666;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #e91e63;
+        }
+
+        .info-card ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .analysis-section {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+        }
+
+        .analysis-section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #e91e63;
+        }
+
+        .analysis-section h1 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .analyze-btn {
+            display: block;
+            margin: 2rem auto;
+            background: linear-gradient(135deg, #e91e63, #f48fb1);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .analysis-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-btn {
+            background: white;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-btn:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+        .upload-area {
+            border: 3px dashed #e91e63;
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+        }
+
+        .upload-area:hover {
+            background: #fce4ec;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .preview-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">🎗️ Breast<b style="color: white;">Care</b></div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#about">Prevention</a></li>
+                <li><a href="#analysis">Analysis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Understanding Breast Cancer</h1>
+            <p class="hero-subtitle">Breast cancer affects 1 in 8 women worldwide, making it the second most common cancer in women. However, when detected early, the 5-year survival rate exceeds 99%. Regular screening and awareness of changes in your breast tissue are your most powerful tools in the fight against breast cancer.</p>
+            <p class="hero-subtitle">Early detection saves lives. Learn about prevention, understand the warning signs, and get your mammogram analyzed with our AI-powered screening tool.</p>
+            <a href="#analysis" class="cta-button">Get Started with Free Analysis</a>
+        </div>
+        <div class="hero-overlay"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <section id="about" class="info-section">
+            <h2>What is Breast Cancer?</h2>
+            <p class="section-intro">Breast cancer occurs when cells in breast tissue grow out of control, forming tumors that can invade surrounding tissues or spread to other parts of the body. It's the most common cancer among women globally, but it can also affect men. The good news? Advances in detection and treatment have dramatically improved survival rates - especially when caught early.</p>
+            
+            <div class="stats-container" style="background: linear-gradient(135deg, #fce4ec, #f8bbd9); padding: 2rem; border-radius: 15px; margin: 2rem 0; text-align: center;">
+                <h3 style="color: #c2185b; margin-bottom: 1rem;">Key Statistics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="background: white; padding: 1rem; border-radius: 10px;">
+                        <strong style="color: #e91e63; font-size: 1.5rem;">99%</strong>
+                        <p>5-year survival rate when detected early</p>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 10px;">
+                        <strong style="color: #e91e63; font-size: 1.5rem;">1 in 8</strong>
+                        <p>Women will develop breast cancer in their lifetime</p>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 10px;">
+                        <strong style="color: #e91e63; font-size: 1.5rem;">40+</strong>
+                        <p>Recommended age to begin annual screening</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="card-icon">⚠️</div>
+                    <h3>Risk Factors</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">While some risk factors can't be changed, understanding them helps with early detection:</p>
+                    <ul>
+                        <li><strong>Age:</strong> Risk increases with age (most diagnoses after 50)</li>
+                        <li><strong>Family history:</strong> Having relatives with breast/ovarian cancer</li>
+                        <li><strong>Genetic mutations:</strong> BRCA1, BRCA2, and other hereditary factors</li>
+                        <li><strong>Dense breast tissue:</strong> Makes detection more challenging</li>
+                        <li><strong>Hormonal factors:</strong> Early menstruation, late menopause</li>
+                        <li><strong>Lifestyle factors:</strong> Alcohol use, lack of physical activity</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Prevention & Screening</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Early detection is your best defense. Follow these guidelines:</p>
+                    <ul>
+                        <li><strong>Annual mammograms:</strong> Starting at age 40-50 (consult your doctor)</li>
+                        <li><strong>Monthly self-exams:</strong> Know your normal breast tissue</li>
+                        <li><strong>Clinical breast exams:</strong> Regular check-ups with healthcare provider</li>
+                        <li><strong>Maintain healthy weight:</strong> Obesity increases risk</li>
+                        <li><strong>Exercise regularly:</strong> 150+ minutes moderate activity weekly</li>
+                        <li><strong>Limit alcohol:</strong> No more than 1 drink per day</li>
+                        <li><strong>Healthy diet:</strong> Rich in fruits, vegetables, and whole grains</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">🔔</div>
+                    <h3>Warning Signs</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Contact your doctor if you notice any of these changes:</p>
+                    <ul>
+                        <li><strong>New lump:</strong> In breast, underarm, or around collarbone</li>
+                        <li><strong>Size/shape changes:</strong> Breast appears different than usual</li>
+                        <li><strong>Skin changes:</strong> Dimpling, puckering, or "orange peel" texture</li>
+                        <li><strong>Nipple changes:</strong> Discharge (other than breast milk) or inversion</li>
+                        <li><strong>Skin irritation:</strong> Redness, scaling, or thickening</li>
+                        <li><strong>Pain:</strong> Persistent breast or nipple pain (though most lumps aren't painful)</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: #e91e63; margin-top: 1rem; font-weight: 500;">Remember: Most breast changes are NOT cancer, but early evaluation is always recommended.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="analysis" class="analysis-section">
+            <h2>Mammogram Analysis</h2>
+            <h1 class="section-intro">
+              Early detection is crucial for successful treatment. Our AI-powered tool can help analyze your mammogram images.
+            </h1>
+            <h3 style="padding-bottom: 20px; font-size: 25px; padding-left: 20px;">Instructions :- </h3>
+            <ol class="instructions-list">
+              <li>💥Point the camera only at the mammogram.</li>
+              <li>💥Complete mammogram image should be captured.</li>
+              <li>💥Ensure that the mammogram is in focus.</li>
+              <li>💥No zoom should be applied that crops out the mammogram.</li>
+            </ol>
+
+            <button id="showAnalysisBtn" class="analyze-btn" style="margin-bottom: 80px; margin-top: 50px;">Start Analysis</button>
+          
+            <div id="analysisTools" class="hidden">
+              <div class="analysis-options">
+                <button onclick="initWebcam()" class="option-btn">Use Webcam</button>
+                <button onclick="stopWebcam()" class="option-btn">Stop Webcam</button>
+              </div>
+              
+              <div class="analysis-options">
+                <button onclick="stopWebcam()" class="option-btn">Import file: <input type="file" id="fileInput" accept="image/*"></button>
+              </div>
+          
+              <div class="tool-container">
+                <div id="webcam-section" class="hidden">
+                  <h3>Webcam Analysis</h3>
+                  <div id="webcam-container" class="webcam-container"></div>
+                </div>
+          
+                <div class="upload-section">
+                  <!-- Make the entire upload area clickable -->
+                  <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept="image/*" class="file-input">
+                    <div class="upload-content">
+                      <div class="upload-icon">📁</div>
+                      <p>Drag & drop your mammogram or click to browse</p>
+                    </div>
+                  </div>
+                  <div class="preview-container">
+                    <img id="previewImage" class="hidden">
+                  </div>
+                  <button onclick="analyzeUpload()" class="analyze-btn">Analyze Image</button>
+                </div>
+          
+                <div id="results-section" class="hidden">
+                  <h3>Analysis Results</h3>
+                  <div id="label-container" class="results-grid"></div>
+                  <div id="recommendations" class="recommendations-container"></div>
+                </div>
+              </div>
+            </div>
+        </section>
+          
+        <script>
+            // When the user clicks anywhere in the upload area, trigger the hidden file input
+            document.getElementById('uploadArea').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
+            
+            // Show analysis tools when button is clicked
+            document.getElementById('showAnalysisBtn').addEventListener('click', function() {
+                document.getElementById('analysisTools').classList.remove('hidden');
+                this.style.display = 'none';
+            });
+            
+            // Basic webcam functionality placeholders
+            function initWebcam() {
+                document.getElementById('webcam-section').classList.remove('hidden');
+                // Webcam initialization code would go here
+            }
+            
+            function stopWebcam() {
+                document.getElementById('webcam-section').classList.add('hidden');
+                // Stop webcam code would go here
+            }
+            
+            function analyzeUpload() {
+                // Analysis code would go here
+                document.getElementById('results-section').classList.remove('hidden');
+            }
+            
+            // File input preview
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('previewImage');
+                        preview.src = e.target.result;
+                        preview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        </script>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Important Notice</h4>
+                <p>This tool is for educational purposes only and should not replace professional medical advice. Always consult with healthcare professionals for proper diagnosis and treatment.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Emergency</h4>
+                <p>If you're experiencing severe symptoms or have concerns about breast health, please contact your healthcare provider or emergency services immediately.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
